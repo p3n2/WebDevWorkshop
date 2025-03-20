@@ -1,5 +1,17 @@
 from task_model import Task
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
+
+from fastapi.middleware.cors import CORSMiddleware
+
+from db_task_model import create_db_and_tables, get_session
+from task_model import Task
+
+from db_task_service import *
+
+from sqlmodel import Session
+
+
+
 
 app = FastAPI()
 
@@ -8,6 +20,11 @@ tasks = [
     Task()
 ]
 
+# Startup event handler - executes when the application starts
+@app.on_event("startup")
+def on_startup():
+    # Create database tables if they don't exist
+    create_db_and_tables()
 
 @app.get("/")
 def root():
