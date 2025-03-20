@@ -9,7 +9,7 @@ def increment():
 class Task(BaseModel):
     id: int
     description: str = ""
-    is_complete: bool = False
+    isComplete: bool = False
 
     def __init__(self,**data):
         super().__init__(id= increment(), **data)
